@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" th:replace="base::layout(~{::section})">
+<head>
+  <meta charset="UTF-8">
+  <title>This is home page</title>
+</head>
+<body>
+<section>
+  <!-- row 10-13 is used to make text in the center of the page using bootstrap. there are 12 columns in a row-->
+ <div class="container">
+   <div class="row">
+     <div class="col-md-6 offset-md-3">
+       <div class="my-card mt-2"> <!-- mt means margin top -->
+         <!-- to send the alert message in case of success or wrong entry -->
+         <!--th:if is used to show message in case of error -->
+         <!--th:classappend type is used to show the type of message. alert in the next class will show the message type -->
+         <div  th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+          <!--to show the content of the message in the controller -->
+           <p class="text-center" th:text="${session.message.content}"></p>
+           <!-- message will be seen for one time and then it will be removed -->
+
+         
+        </div>
+        <!--to insert an image, use img tab. to center the image use a div and write text-center-->
+         <div class="container text-center">
+           <img style="width:60px;" src=""th:src="@{/img/membership.png}" alt="">
+         </div>
+
+       <h1 class="text-center">Register here!!</h1>
+         <form action="" method="post" th:action="@{/do_register}" th:object="${user}">
+           <!--name field -->
+           <div class="mb-3">
+             <label for="name_field" class="form-label">Name</label>
+             <input type="text"
+                    name="name"
+                    class="form-control"
+                    id="name_field"
+                    aria-describedby="emailHelp"
+                    placeholder="enter your name"
+                    required
+
+             th:value="${user.name}">
+             <!-- now if user add some values in each field it will be added to that th: value filed. this line is for the above th:value -->
+
+           </div>
+           <!--email field -->
+           <div class="mb-3">
+             <label for="email_field" class="form-label">Email</label>
+             <input type="email"
+                    name="email"
+                    class="form-control"
+                    id="email_field"
+                    aria-describedby="emailHelp"
+                    placeholder="enter your email"
+                    required
+                    th:value="${user.email}">
+           </div>
+           <!--password field -->
+           <div class="mb-3">
+             <label for="password_field" class="form-label">Password</label>
+             <input type="password"
+                    name="password"
+                    class="form-control"
+                    id="password_field"
+                    aria-describedby="emailHelp"
+                    placeholder="enter your password"
+                    required
+                    >
+           </div>
+           <!--user about field -->
+           <div class="form-group">
+             <textarea placeholder="enter about yourself"
+                       rows="5"
+                       name="about"
+                       th:value="${user.about}"
+                       class="form-control"
+                       id="floatingTextarea"></textarea>
+
+           </div>
+           <!--terms and conditions -->
+           <div class="mb-3 form-group form-check">
+             <input type="checkbox"
+                    name="agreement"
+                    class="form-check-input" id="exampleCheck1">
+             <label class="form-check-label" for="exampleCheck1">Accept terms and conditions</label>
+           </div>
+
+           <!--creating buttons for submit and login -->
+           <div class="container d-grid gap-2 text-center mt-3">
+             <button type="submit" class="btn bg-primary text-white text-uppercase">
+               Submit
+             </button>
+             <button type="reset" class="btn btn-warning text-white text-uppercase">
+               Reset
+             </button>
+           </div>
+
+
+         </form>
+
+       </div>
+
+     </div>
+
+   </div>
+
+ </div>
+
+</section>
+
+
+</body>
+</html>
