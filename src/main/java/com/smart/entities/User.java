@@ -1,6 +1,9 @@
 package com.smart.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +14,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotBlank(message = "name should not be blank")
+    @Size(min = 2,max = 20, message = "minimum 2 and maximum 20 characters are allowed")
     private String name;
     @Column(unique = true)
     private String email;
+    @Size(min= 5, message = "password must be of minimum 5 characters")
     private String password;
     private String role;
     private boolean enabled;
     private String imageUrl;
     @Column(length = 500)
+    @Size(min = 10, message = "about should at least contain 1o characters")
     private String about;
 
     // this user has many contacts. in order to store all the contacts we can make a field list

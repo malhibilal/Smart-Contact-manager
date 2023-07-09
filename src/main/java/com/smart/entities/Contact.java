@@ -13,7 +13,7 @@ public class Contact {
     private String secondName;
     private String work;
     private String emil;
-    private String phone; // we can change it afterwards and we dont need to perform nay calculation
+    private String phone; // we can change it afterwards and we dont need to perform any calculation
     private String image;
     @Column( length = 5000)
     private String description;

@@ -23,17 +23,19 @@
         </div>
         <!--to insert an image, use img tab. to center the image use a div and write text-center-->
          <div class="container text-center">
-           <img style="width:60px;" src=""th:src="@{/img/membership.png}" alt="">
+           <img style="width:60px;" src="" th:src="@{/img/membership.png}" alt="">
          </div>
 
        <h1 class="text-center">Register here!!</h1>
-         <form action="" method="post" th:action="@{/do_register}" th:object="${user}">
+         <!--novalidate will invalidate the default validation of bootstrap.  -->
+         <form novalidate action="" method="post" th:action="@{/do_register}" th:object="${user}">
            <!--name field -->
            <div class="mb-3">
              <label for="name_field" class="form-label">Name</label>
              <input type="text"
                     name="name"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('name')? 'is-invalid':''}"
                     id="name_field"
                     aria-describedby="emailHelp"
                     placeholder="enter your name"
@@ -41,7 +43,8 @@
 
              th:value="${user.name}">
              <!-- now if user add some values in each field it will be added to that th: value filed. this line is for the above th:value -->
-
+                <div class="invalid feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+                </div>
            </div>
            <!--email field -->
            <div class="mb-3">
@@ -61,20 +64,26 @@
              <input type="password"
                     name="password"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('password')? 'is-invalid':''}"
                     id="password_field"
                     aria-describedby="emailHelp"
                     placeholder="enter your password"
                     required
                     >
+             <div class="invalid feedback" th:each="e : ${#fields.errors('password')}" th:text="${e}">
+             </div>
            </div>
            <!--user about field -->
            <div class="form-group">
              <textarea placeholder="enter about yourself"
                        rows="5"
                        name="about"
-                       th:value="${user.about}"
+                       th:text="${user.about}"
                        class="form-control"
+                       th:classappend="${#fields.hasErrors('about')? 'is-invalid':''}"
                        id="floatingTextarea"></textarea>
+             <div class="invalid feedback" th:each="e : ${#fields.errors('about')}" th:text="${e}">
+             </div>
 
            </div>
            <!--terms and conditions -->

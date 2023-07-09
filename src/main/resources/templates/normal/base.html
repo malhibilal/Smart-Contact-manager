@@ -9,11 +9,13 @@
         rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
         crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <!-- nav bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class=" fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Smart Contact Manager</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,16 +27,13 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/home}" href="#">Home</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" ><span th:text="${user.name}"></span></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" th:href="@{signin}">Login</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/signup}">sign up</a>
+          <a class="nav-link" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
 
@@ -42,8 +41,33 @@
   </div>
 </nav>
 <!--end of navbar -->
-<!-- it means that home section tag will take place of this div below -->
-<div th:replace="${content}"></div>
+<!--start of sidebar -->
+<div class="sidebar mt-2">
+  <span onclick="toggleSidebar()"class="crossBtn">&times;</span>
+
+  <a href="#" th:href="@{/user/index}"  class="item"> <i class="fa-solid fa-house"></i>Home </a>
+  <a href="#" class="item"> <i class="fa-solid fa-address-book"> </i> View Contacts </a>
+  <a href="#" th:href="@{/user/add-contact}" class="item"> <i class="fa-solid fa-user-plus"></i>Add Contacts</a>
+  <a href="#" class="item"> <i class="fa-solid fa-id-card"></i> Your Profile</a>
+  <a href="#" class="item"> <i class="fa-sharp fa-regular fa-gear"></i> Settings</a>
+  <a href="#" th:href="@{/logout}" class="item"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+  <div class="divider"></div>
+
+</div>
+<!--end of sidebar -->
+<!--end of content area -->
+<div class="content mt-5">
+  <i onclick="toggleSidebar()"class="fas fa-bars m-3"></i>
+  <div th:replace="${content}"></div>
+
+</div>
+<!--end of content area -->
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
