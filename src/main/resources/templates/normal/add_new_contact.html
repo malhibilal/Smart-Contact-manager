@@ -9,11 +9,11 @@
 <section>
  <div class="card mr-3 ml-3">
    <div class="card-body">
-     <h1 class="text-center"> Add Contact</h1>
+     <h1 class="text-center">Add Contact</h1>
      <div class="container-fluid mt-1">
        <div class="row">
          <div class="col-md-8 offset-md-2">
-           <form action=""
+           <form action="#"
                  th:object="${contact}"
                  enctype="multipart/form-data"
                  method="POST"
@@ -24,17 +24,17 @@
              <div class="input-group mt-3">
                <div class="input-group-prepend">
                  <div class="input-group-text">
-                   <i class="fa fa-plus">  </i>
+                   <i class="fa fa-plus"></i>
                  </div>
                </div>
-               <input type="text" id="firstNmae" name="name" placeholder="write your name here" class="form-control">
+               <input type="text" id="firstName" name="name" placeholder="write your name here" class="form-control">
              </div>
              <!-- second   name -->
 
              <div class="input-group mt-3">
                <div class="input-group-prepend">
                  <div class="input-group-text">
-                   <i class="fas fa-user-alt">  </i>
+                   <i class="fas fa-user-alt"></i>
                  </div>
                </div>
                <input type="text" id="secondName" name="secondName" placeholder="write your second name here" class="form-control">
@@ -45,7 +45,7 @@
              <div class="input-group mt-3">
                <div class="input-group-prepend">
                  <div class="input-group-text">
-                   <i class="fas fa-briefcase">  </i>
+                   <i class="fas fa-briefcase"></i>
                  </div>
                </div>
                <input type="text" id="work" name="work" placeholder="write about your work: job, study or business" class="form-control">
@@ -59,33 +59,38 @@
                    <i class="fa fa-phone">  </i>
                  </div>
                </div>
-               <input type="number" id="phone" name="phone" placeholder="write your phone number" class="form-control">
+               <input type="number" id="phone" name="phone" placeholder="write your phone number" class="form-control"/>
              </div>
 
              <!-- email -->
 
              <div class="input-group mr-3 mt-3">
                <div class="input-group-prepend">
-                 <div class="input-group-text">
+                 <div class="input-group-text ">
                    @
-
                  </div>
                </div>
-               <input type="email" id="email" name="email" placeholder="write your email here" class="form-control">
+               <input required type="email"
+                      id="email" name="email"
+                      placeholder="write email here"
+                      class="form-control"/>
              </div>
 
              <!-- description, a bit different from the others -->
              <div class="form-group mt-3">
-               <textarea name="description" id="description" class="form-control" rows="10" placeholder="enter your contact description"></textarea>
+               <textarea name="description"
+                         id="description" class="form-control"
+                         rows="10"
+                         placeholder="enter your contact description"></textarea>
              </div>
 
              <!-- contact image, a bit different from the others -->
              <div class="custom-file">
-               <input type="file" name="image"/>
+               <input type="file" name="profileImage"/>
              </div>
              <!-- button add contact -->
-             <div class="container text-center" >
-               <button class="btn btn-outline-primary"> Save Contact</button>
+             <div class="container text-center">
+               <button class="btn btn-outline-primary">Save Contact</button>
              </div>
 
 
