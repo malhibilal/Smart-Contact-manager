@@ -1,5 +1,6 @@
 package com.smart.controller;
 
+import com.smart.dao.ContactRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
@@ -8,6 +9,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,12 +24,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContactRepository contactRepository;
     @ModelAttribute
     public void addCommonData(Model model, Principal principal){
         // getting the user by principal. in this method we are getting the user
@@ -91,6 +98,34 @@ public class UserController {
             session.setAttribute("message", new MyMessagge("Error adding contact. please try again","danger"));
         }
         return "normal/add_new_contact";
+
+    }
+    // show all the contacts
+    @GetMapping("/show-contacts/{page}")
+    public String showContacts(@PathVariable("page") Integer page, Model model, Principal principal){
+
+        model.addAttribute("title","Show Contacts");
+        // one way
+        //String name=principal.getName();
+        //User user =userRepository.getUserByEmail(name);
+       // List<Contact> contact =user.getContact(); //send the list to html page via thymeleaf
+
+        // second way - through contact repository
+        // use principal to get the name of the user,username gets the whole user from the repository
+        String userName=principal.getName();
+        User user=this.userRepository.getUserByEmail(userName);
+
+        // to set the two variables, page and the number of contact per page
+        Pageable pageable=PageRequest.of(page,5);
+        //List<Contact> contacts=this.contactRepository.findContactsByUser(user.getId()); without pagination
+        // added pageable object and changed from list to page
+        Page<Contact> contacts=this.contactRepository.findContactByUser(user.getId(),pageable);
+
+        model.addAttribute("contacts",contacts); // list of contacts
+        model.addAttribute("currentPage",page); // current page
+        model.addAttribute("totalPages",contacts.getTotalPages());// total pages
+
+        return "normal/show_contacts";
 
     }
 }
