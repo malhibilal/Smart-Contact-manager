@@ -133,14 +133,18 @@ public class UserController {
     }
     // getting a specific contact details
     @GetMapping("/{cId}/contact") // user is already at the top mapped.
-    public String showContactDetail(@PathVariable("cId") Integer cId,Model model){
+    public String showContactDetail(@PathVariable("cId") Integer cId,Model model,Principal principal){
 
         Optional<Contact> contactOptional= this.contactRepository.findById(cId);
         Contact contact=contactOptional.get();
-
-        model.addAttribute("contact",contact);
-
-
+        // now to check which user is logged in
+        String userName=principal.getName();
+        User user=this.userRepository.getUserByEmail(userName);
+        // now we have the user, we will use if cond. to chck
+        if(user.getId()==contact.getUser().getId()) {
+            model.addAttribute("contact", contact);
+            model.addAttribute("title",contact.getName());
+        }
         return "normal/contact_detail";
     }
 }
