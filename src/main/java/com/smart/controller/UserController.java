@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -73,6 +74,9 @@ public class UserController {
             if(file.isEmpty()){
                 // empty
                 System.out.println("image is empty");
+                // if the user has not selected an image, then default image will appear
+                contact.setImage("contact.png");
+
 
             }else {
                 // upload the file to the folder and update the name to contact
@@ -126,6 +130,17 @@ public class UserController {
         model.addAttribute("totalPages",contacts.getTotalPages());// total pages
 
         return "normal/show_contacts";
+    }
+    // getting a specific contact details
+    @GetMapping("/{cId}/contact") // user is already at the top mapped.
+    public String showContactDetail(@PathVariable("cId") Integer cId,Model model){
 
+        Optional<Contact> contactOptional= this.contactRepository.findById(cId);
+        Contact contact=contactOptional.get();
+
+        model.addAttribute("contact",contact);
+
+
+        return "normal/contact_detail";
     }
 }
