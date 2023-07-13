@@ -21,7 +21,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="c :${contacts} ">
+            <tr th:each="c:${contacts} ">
                 <th scope="row" th:text="${'SCM2023'+c.cId}">1</th>
 
                 <td>
@@ -35,9 +35,13 @@
 
                 <td th:text="${c.phone}"></td>
                 <td>
-                    <button class="btn btn-danger btn-small">Delete</button>
+                  <!--  <a href="" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-small">Delete</a> -->
+                    <a href="" th:onclick="'deleteContact(' + ${c.cId} + ', event)'" class="btn btn-danger btn-small">Delete</a>
+
                     <button class="btn btn-primary btn-small">Update</button>
-                    </td>
+
+
+                </td>
             </tr>
 
             </tbody>
