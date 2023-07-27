@@ -38,8 +38,9 @@
                   <!--  <a href="" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-small">Delete</a> -->
                     <a href="" th:onclick="'deleteContact(' + ${c.cId} + ', event)'" class="btn btn-danger btn-small">Delete</a>
 
-                    <button class="btn btn-primary btn-small">Update</button>
-
+                    <form method="post" th:action="@{'/user/update-contact/'+${c.cId}}" class="mt-2">
+                    <button type="submit" class="btn btn-primary btn-small">Update</button>
+                    </form>
 
                 </td>
             </tr>

@@ -156,9 +156,10 @@ public class UserController {
     //delete contact handler
 
     @GetMapping("/delete/{cId}")
-    public String deleteContact(@PathVariable("cId") Integer cId, Model model, Principal principal,HttpSession session) {
+    public String deleteContact(@PathVariable("cId") Integer cId, Model model,
+                                Principal principal,HttpSession session) {
 
-        // get the contact details to be delted
+        // get the contact details to be deleted
         Optional<Contact> contactOptional = this.contactRepository.findById(cId);
         Contact contact = contactOptional.get();
         // another easier way for the above two lines of getting the contact
@@ -175,6 +176,58 @@ public class UserController {
         // /user/show-contacts/0 is the url for showing the contact and 0 means the page on the
         // 0th index i.e. page 1
 
+    }
+
+    // open update contact handler
+    @PostMapping("/update-contact/{cId}")
+    public String updateCOontact(@PathVariable("cId") Integer cId, Model model){
+        model.addAttribute("title","Update Contact");
+        Contact contact=this.contactRepository.findById(cId).get();
+        model.addAttribute("contact",contact);
+
+        return "normal/update_form";
+    }
+
+    // update contact handler
+    @PostMapping("/process-update")
+    public String updateHandler(@ModelAttribute Contact contact, @RequestParam("profileImage")
+    MultipartFile file, Model model,HttpSession session, Principal principal
+    ){
+        try {
+            // old contact details
+            Contact oldContact=this.contactRepository.findById(contact.getcId()).get();
+            // image
+            if(!file.isEmpty()){
+                // rewirte the new file
+                // delete old photo
+                File deleteFile = new ClassPathResource("static/img").getFile();
+                File file1 = new File(deleteFile,oldContact.getImage());
+                file1.delete();
+
+                // update new photo
+
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+                contact.setImage(file.getOriginalFilename());
+
+            } else {
+                contact.setImage(file.getOriginalFilename());
+            }
+            User user= this.userRepository.getUserByEmail(principal.getName());
+            contact.setUser(user); // user and contact are linked
+            this.contactRepository.save(contact);
+            // @model attribute is used to send the whole object of contact
+            session.setAttribute("message",new MyMessagge("Your contact is updated","success"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("contact name: "+contact.getName());
+        System.out.println("contact ID: "+contact.getcId());
+
+
+        return "redirect:/user/"+contact.getcId()+"/contact";
     }
 
 }
