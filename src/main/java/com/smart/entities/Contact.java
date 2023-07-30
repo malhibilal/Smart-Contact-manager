@@ -119,4 +119,9 @@
                     ", user=" + user +
                     '}';
         }
+        // this method will compare the cId with the contact object id to be deleted.
+        @Override
+        public boolean equals(Object obj) {
+            return this.cId==((Contact)obj).getcId();
+        }
     }

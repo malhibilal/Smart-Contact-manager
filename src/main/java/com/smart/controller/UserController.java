@@ -159,7 +159,7 @@ public class UserController {
     public String deleteContact(@PathVariable("cId") Integer cId, Model model,
                                 Principal principal,HttpSession session) {
 
-        // get the contact details to be deleted
+       /* // get the contact details to be deleted
         Optional<Contact> contactOptional = this.contactRepository.findById(cId);
         Contact contact = contactOptional.get();
         // another easier way for the above two lines of getting the contact
@@ -170,7 +170,14 @@ public class UserController {
         if (user.getId() == contact.getUser().getId()) {
             contact.setUser(null);
             this.contactRepository.delete(contact);
-        }
+        }*/
+        // new way of doing the delete function. get the contact, get the user and list of all the contacts
+        // and then remove a particular contact and then save the usr
+
+        Contact contact=this.contactRepository.findById(cId).get();
+        User user=this.userRepository.getUserByEmail(principal.getName());
+        user.getContact().remove(contact);
+        this.userRepository.save(user);
         session.setAttribute("message",new MyMessagge("Contact deleted successfully !!","success"));
         return "redirect:/user/show-contacts/0";
         // /user/show-contacts/0 is the url for showing the contact and 0 means the page on the

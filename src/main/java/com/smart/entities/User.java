@@ -35,7 +35,7 @@ public class User {
     // eager means when the user is created all the contacts are fetched along with the user
     // mapping has created a third table with userid and contact id. in order to avoid this third table we can use
     // mapped by after fetch. this will mapp the contact id with user id without creating a new table
-    @OneToMany(cascade = CascadeType.ALL, fetch =FetchType.LAZY,mappedBy ="user")
+    @OneToMany(cascade = CascadeType.ALL, fetch =FetchType.LAZY,mappedBy ="user",orphanRemoval = true)
    private List<Contact> contact = new ArrayList<>();
 
     public User() {
