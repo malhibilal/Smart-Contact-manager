@@ -7,7 +7,22 @@
 </head>
 <body>
 <section>
-    <h1> you are normal user and this is your private dashborad</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="container text-center">
+                    <img style="height: 200px; width: 200px;" class="my_profile_pic"
+                         src="" th:src="@{'/img/contact_logo.png'}" alt="profile photo"/>
+                </div>
+                <h1 class="text-center mt-3 text-secondary font-italic font-weight-light">
+                    Start adding your contact</h1>
+
+                <a th:href="@{/user/add-contact}" class="btn btn-primary text-uppercase mt-4">Add New Contact</a>
+
+            </div>
+        </div>
+
+    </div>
 </section>
 
 
