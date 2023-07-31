@@ -16,6 +16,7 @@
 
       </div>
        <h1 class="text-center mt-3" th:text="${user.name}"></h1>
+         <div class="table-responsive">
        <table class="table text-center">
          <thead>
          <tr>
@@ -43,10 +44,18 @@
          </tr>
          </tbody>
        </table>
+         </div>
      </div>
    </div>
 
  </div>
+
+    <script>
+        $(document).ready(() => {
+        $(".item").removeClass("active");
+         $("#profile-link").addClass("active");
+         });
+    </script>
 </section>
 
 

@@ -17,12 +17,19 @@
                 <h1 class="text-center mt-3 text-secondary font-italic font-weight-light">
                     Start adding your contact</h1>
 
-                <a th:href="@{/user/add-contact}" class="btn btn-primary text-uppercase mt-4">Add New Contact</a>
+                <a th:href="@{/user/add-contact}" class="btn btn-primary text-uppercase mt-4">
+                    Add New Contact</a>
 
             </div>
         </div>
 
     </div>
+    <script>
+        $(document).ready(() => {
+        $(".item").removeClass("active");
+         $("#home-link").addClass("active");
+         });
+    </script>
 </section>
 
 
