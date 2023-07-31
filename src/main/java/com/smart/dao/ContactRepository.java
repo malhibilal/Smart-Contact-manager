@@ -1,6 +1,7 @@
 package com.smart.dao;
 
 import com.smart.entities.Contact;
+import com.smart.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,9 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
    // public List<Contact> findContactsByUser( @Param("userId") Integer userId); // without pagination
     // with pagination
     public Page<Contact> findContactByUser(@Param("userId") int userId, Pageable pageable);
+
+    // search function
+    // it will search name variable and User
+        public List<Contact> findByNameContainingAndUser(String name, User user);
 
 }
