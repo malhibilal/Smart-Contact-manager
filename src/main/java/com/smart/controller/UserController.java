@@ -12,6 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -243,6 +246,44 @@ public class UserController {
         model.addAttribute("title","Profile Page");
 
         return "normal/profile";
+    }
+
+    // open setting, change password
+    @GetMapping("/settings")
+    public String openSetting(){
+
+        return "normal/settings";
+    }
+
+    //change password handler
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 Principal principal,HttpSession session){
+        System.out.println("oldpassword"+oldPassword);
+        System.out.println("newpassword"+newPassword);
+
+        String userName= principal.getName();
+        User currentUser= this.userRepository.getUserByEmail(userName);
+        currentUser.getPassword();
+        if(this.passwordEncoder.matches(oldPassword,currentUser.getPassword())){
+            //change password
+            currentUser.setPassword(this.passwordEncoder.encode(newPassword));
+            this.userRepository.save(currentUser);
+            session.setAttribute("message",new MyMessagge("Password has changed successfully",
+                    "success"));
+        }else {
+            // error message
+            session.setAttribute("message", new MyMessagge("Wrong Password. Please enter the correct password" +
+                    "","danger"));
+            return "redirect:/user/settings";
+
+        }
+
+
+
+
+        return "redirect:/user/index";
     }
 
 }
