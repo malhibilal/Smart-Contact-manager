@@ -279,10 +279,6 @@ public class UserController {
             return "redirect:/user/settings";
 
         }
-
-
-
-
         return "redirect:/user/index";
     }
 
