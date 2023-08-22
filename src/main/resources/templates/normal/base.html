@@ -64,7 +64,6 @@
   <i onclick="toggleSidebar()"class="fas fa-bars m-3"></i>
 
   <!-- showing message box after successful adding a contact. it has to be conditional -->
-
   <div th:if="${session.message}" class="container">
     <div  th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert">
       <!-- to show the message dynamically from the user controller-->
