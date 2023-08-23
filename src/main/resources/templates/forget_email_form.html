@@ -15,7 +15,7 @@
                         <div th:if="${session.message}" class="container">
                             <div class="alert alert-danger my-2 text-center" role="alert">
                                 <!-- to show the message dynamically from the user controller-->
-                                <span th:text="${session.message.content}"></span>
+                                <span th:text="${session.message}"></span>
                             </div>
                             <!-- now we want to remove the message after it has been displayed -->
                             <th:block th:remove="${@sessionHelper.removeMessageFromSession()}"></th:block>

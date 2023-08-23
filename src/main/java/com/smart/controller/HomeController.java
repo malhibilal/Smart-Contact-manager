@@ -42,7 +42,8 @@ public class HomeController {
     // this is for registering user. getting the data which user inserted
     @PostMapping("/do_register")
     // @ModelAttribute is used when we have to get data from the user ,
-    public String registerUser(@Valid @ModelAttribute User user,BindingResult bindingResult, @RequestParam(defaultValue = "false")
+    public String registerUser(@Valid @ModelAttribute User user,BindingResult bindingResult,
+                               @RequestParam(defaultValue = "false")
     boolean agreement, Model model ,HttpSession session) {
         try {
             if (!agreement) {
@@ -56,7 +57,7 @@ public class HomeController {
             }
 
             // if the user has accepted the terms
-            user.setRole("USER");
+            user.setRole("ROLE_USER");
             user.setEnabled(true);
             user.setImageUrl("default.png");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -91,5 +92,6 @@ public class HomeController {
         model.addAttribute("title","Login Page");
         return "login";
     }
+
 
 }

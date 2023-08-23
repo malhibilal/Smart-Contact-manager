@@ -41,6 +41,19 @@ public class User {
     public User() {
     }
 
+    public User(String name, String email, String password,
+                String role, boolean enabled, String imageUrl,
+                String about, List<Contact> contact) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled;
+        this.imageUrl = imageUrl;
+        this.about = about;
+        this.contact = contact;
+    }
+
     public int getId() {
         return id;
     }
